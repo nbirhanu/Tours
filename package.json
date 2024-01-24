@@ -1,0 +1,22 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "learning node js mongoDB and mongoose",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nbirhanu/Tours.git"
+  },
+  "author": "natnael birhanu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nbirhanu/Tours/issues"
+  },
+  "homepage": "https://github.com/nbirhanu/Tours#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
