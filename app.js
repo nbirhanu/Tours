@@ -1,10 +1,13 @@
 const fs = require('fs');
 const express = require('express');
+const morgan = require('morgan');
 
 //using express
 const app = express();
 
+//MIDDLEWARE
 app.use(express.json());
+app.use(morgan('dev'));
 
 //read file
 const tours = JSON.parse(
