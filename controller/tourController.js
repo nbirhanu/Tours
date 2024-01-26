@@ -4,6 +4,16 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
 
+exports.cheackId = (req, res, next, val) => {
+  if (+req.params.id > tours.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'invalid id',
+    });
+  }
+  next();
+};
+
 exports.getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -56,13 +66,6 @@ exports.getTourById = (req, res) => {
 
 //UPDATE TOUR
 exports.updateTour = (req, res) => {
-  if (+req.params.id > tours.length) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'invalid id',
-    });
-  }
-
   res.status(200).json({
     status: 'success',
     data: {
@@ -72,13 +75,6 @@ exports.updateTour = (req, res) => {
 };
 //DELETE TOUR
 exports.deleteTour = (req, res) => {
-  if (+req.params.id > tours.length) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'invalid id',
-    });
-  }
-
   res.status(204).json({
     status: 'success',
     data: {
