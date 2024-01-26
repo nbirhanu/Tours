@@ -1,10 +1,10 @@
 const fs = require('fs');
 
 const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
+  fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
 
-const getAllTours = (req, res) => {
+exports.getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
     result: tours.length,
@@ -15,7 +15,7 @@ const getAllTours = (req, res) => {
 };
 
 //POST API
-const createTour = (req, res) => {
+exports.createTour = (req, res) => {
   const newTour = Object.assign(req.body);
   tours.push(newTour);
 
@@ -34,7 +34,7 @@ const createTour = (req, res) => {
 };
 
 // GET DOCUMENT BY ID
-const getTourById = (req, res) => {
+exports.getTourById = (req, res) => {
   const id = +req.params.id;
 
   const tour = tours.find((el) => el.id === id);
@@ -55,7 +55,7 @@ const getTourById = (req, res) => {
 };
 
 //UPDATE TOUR
-const updateTour = (req, res) => {
+exports.updateTour = (req, res) => {
   if (+req.params.id > tours.length) {
     return res.status(404).json({
       status: 'fail',
@@ -71,7 +71,7 @@ const updateTour = (req, res) => {
   });
 };
 //DELETE TOUR
-const deleteTour = (req, res) => {
+exports.deleteTour = (req, res) => {
   if (+req.params.id > tours.length) {
     return res.status(404).json({
       status: 'fail',
