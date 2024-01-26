@@ -98,13 +98,51 @@ const deleteTour = (req, res) => {
   });
 };
 
+//usersfunctions
+const getAllUsers = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'athis route is not yet defined!!!',
+  });
+};
+const createUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'athis route is not yet defined!!!',
+  });
+};
+const getUserById = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'athis route is not yet defined!!!',
+  });
+};
+const updateUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'athis route is not yet defined!!!',
+  });
+};
+const deleteUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'athis route is not yet defined!!!',
+  });
+};
+
 //ROUTES
-
+const userRouter = express.Router();
 const tourRouter = express.Router();
+//middleware
 app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
 
+//tourRouter
 tourRouter.route('/').get(getAllTours).post(createTour);
 tourRouter.route('/:id').get(getTourById).patch(updateTour).delete(deleteTour);
+//userRouter
+userRouter.route('/').get(getAllUsers).post(createUser);
+userRouter.route('/:id').get(getUserById).patch(updateUser).delete(deleteUser);
 
 const port = 3000;
 
