@@ -98,12 +98,13 @@ const deleteTour = (req, res) => {
   });
 };
 
-app.route('/api/v1/tours').get(getAllTours).post(createTour);
-app
-  .route('/api/v1/tours/:id')
-  .get(getTourById)
-  .patch(updateTour)
-  .delete(deleteTour);
+//ROUTES
+
+const tourRouter = express.Router();
+app.use('/api/v1/tours', tourRouter);
+
+tourRouter.route('/').get(getAllTours).post(createTour);
+tourRouter.route('/:id').get(getTourById).patch(updateTour).delete(deleteTour);
 
 const port = 3000;
 
