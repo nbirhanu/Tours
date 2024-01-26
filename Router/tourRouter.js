@@ -4,6 +4,8 @@ const tourController = require('./../controller/tourController');
 
 const router = express.Router();
 
+router.param('id', tourController.cheackId);
+
 router
   .route('/')
   .get(tourController.getAllTours)
