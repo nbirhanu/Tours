@@ -19,8 +19,8 @@ exports.createTour = async (req, res) => {
 };
 
 exports.getAllTours = async (req, res) => {
-  const tours = await Tour.find();
   try {
+    const tours = await Tour.find();
     res.status(200).json({
       status: 'success',
       result: tours.length,
@@ -38,9 +38,8 @@ exports.getAllTours = async (req, res) => {
 
 // GET DOCUMENT BY ID
 exports.getTourById = async (req, res) => {
-  const tour = await Tour.findById(req.params.id);
-
   try {
+    const tour = await Tour.findById(req.params.id);
     res.status(200).json({
       status: 'success',
       data: {
@@ -56,13 +55,24 @@ exports.getTourById = async (req, res) => {
 };
 
 // UPDATE TOUR
-exports.updateTour = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour: '<Update tour here....>',
-    },
-  });
+exports.updateTour = async (req, res) => {
+  try {
+    const updatedTour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.status(200).json({
+      status: 'success',
+      data: {
+        updatedTour,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'error',
+      message: err,
+    });
+  }
 };
 // DELETE TOUR
 exports.deleteTour = (req, res) => {
