@@ -47,6 +47,14 @@ exports.getAllTours = async (req, res) => {
     } else {
       query = query.select('-__v');
     }
+
+    //PAGINATION
+    const page = +req.query.page || 1;
+    const limit = +req.query.limit || 100;
+    const skip = (page - 1) * limit;
+
+    query = query.skip(skip).limit(limit);
+
     //EXECUTE
     const tours = await query;
 
