@@ -110,7 +110,9 @@ exports.tourStats = async (req, res) => {
       },
       {
         $group: {
-          _id: null,
+          _id: '$ratingsAverage',
+          numOfTours: { $sum: 1 },
+          numOfRatings: { $sum: '$ratingsQuantity' },
           avgRating: { $avg: '$ratingsAverage' },
           avgprice: { $avg: '$price' },
           minPrice: { $min: '$price' },
@@ -122,6 +124,57 @@ exports.tourStats = async (req, res) => {
       status: 'success',
       data: {
         stats,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({
+      status: 'error',
+      message: err,
+    });
+  }
+};
+
+//MONTHLYPLANE
+exports.monthlyPlane = async (req, res) => {
+  try {
+    const year = req.params.year * 1;
+
+    const plan = await Tour.aggregate([
+      {
+        $unwind: '$startDates',
+      },
+      {
+        $match: {
+          startDates: {
+            $gte: new Date(`${year}-01-01`),
+            $lte: new Date(`${year}-12-12`),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { $month: '$startDates' },
+          numTourStart: { $sum: 1 },
+          Tours: { $push: '$name' },
+        },
+      },
+      {
+        $addFields: { month: '$_id' },
+      },
+      {
+        $project: {
+          _id: 0,
+        },
+      },
+      {
+        $sort: { numTourStart: -1 },
+      },
+    ]);
+    res.status(200).json({
+      status: 'success',
+      data: {
+        plan,
       },
     });
   } catch (err) {
