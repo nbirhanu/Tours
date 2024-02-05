@@ -1,10 +1,11 @@
 const express = require('express');
 
-const tourController = require('./../controller/tourController');
+const tourController = require('../controller/tourController');
 
 const router = express.Router();
 
-router.param('id', tourController.cheackId);
+//tour-stats
+router.route('/tour-stats').get(tourController.tourStats);
 
 router
   .route('/')
