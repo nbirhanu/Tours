@@ -85,6 +85,9 @@ const tourSchema = new mongoose.Schema(
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   },
+  {
+    slug: String,
+  },
 );
 
 tourSchema.virtual('durationsWeeks').get(function () {
@@ -93,6 +96,7 @@ tourSchema.virtual('durationsWeeks').get(function () {
 
 //DOCUMENT MIDDLEWARE
 tourSchema.pre('save', function () {
+  this.slug = slugify(this.name, { lower: true });
   console.log(this);
 });
 
