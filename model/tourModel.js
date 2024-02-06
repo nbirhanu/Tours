@@ -88,15 +88,27 @@ const tourSchema = new mongoose.Schema(
   {
     slug: String,
   },
+  {
+    secretTour: {
+      type: Boolean,
+      default: false,
+    },
+  },
 );
 
 tourSchema.virtual('durationsWeeks').get(function () {
   return this.duration / 7;
 });
 
-//DOCUMENT MIDDLEWARE
+//DOCUMENT MIDDLEWARE for only create and save
 tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+//QUERY MIDDLEWARE
+tourSchema.pre(/^find/, function (next) {
+  this.find({ secretTour: { $ne: true } });
   next();
 });
 
