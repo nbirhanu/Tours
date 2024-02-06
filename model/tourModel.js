@@ -95,9 +95,9 @@ tourSchema.virtual('durationsWeeks').get(function () {
 });
 
 //DOCUMENT MIDDLEWARE
-tourSchema.pre('save', function () {
+tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
-  console.log(this);
+  next();
 });
 
 const Tour = mongoose.model('Tour', tourSchema);
